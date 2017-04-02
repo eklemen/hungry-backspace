@@ -3,16 +3,14 @@ import {
     ExtensionContext,
     Selection,
     Range,
-    Position,
     WorkspaceEdit,
-    TextEdit,
     commands,
     window,
     workspace
 } from 'vscode';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+// This method gets called when backspaceLeft key is pressed.
+// The second param is our function that runs on activation.
 export function activate(context: ExtensionContext) {
     context.subscriptions.push(commands.registerCommand('jrieken.backspaceLeft', backspace));
 }
@@ -26,33 +24,14 @@ function backspace() {
 
 
     const newSelections = selections.map(selection => {
-        // If the line isn't empty(with whitespace) do nothing
+        // If the line isn't empty(with whitespace) do nothing.
         if (!selection.isEmpty) {
             return selection;
-        }
-        function positionFactory(line, char) {
-            return new Position(line, char);
-        }
-
-        function rangeFactory(start, end) {
-            return new Range(start, end);
-        }
-
-        function textEditFactory(range, content) {
-            return new TextEdit(range, content);
-        }
-
-        function editFactory(coords, content) {
-            const {start, end} = coords;
-            const startPosition = positionFactory(start.line, start.char);
-            const endPosition = positionFactory(end.line, end.char);
-            const range = rangeFactory(startPosition, endPosition);
-            return textEditFactory(range, content);
         }
 
         function deleteFactory(uri, coords) {
             const workspaceEdit = new WorkspaceEdit();
-            const range = rangeFactory(coords.start, coords.end);
+            const range = new Range(coords.start, coords.end);
             workspaceEdit.delete(uri, range);
             workspace.applyEdit(workspaceEdit);
         }
@@ -61,9 +40,8 @@ function backspace() {
         if (line.isEmptyOrWhitespace) {
             deleteFactory(document.uri, line.range)
             const position = editor.selection.active;
-            var newPosition = position.with(position.line, 0);
+            const newPosition = position.with(position.line, 0);
             editor.selection = new Selection(newPosition, newPosition);
-            // editor.selection = newSelection
             return editor.selection;
         }
     });
