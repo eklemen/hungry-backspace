@@ -50,20 +50,16 @@ function backspace() {
             return textEditFactory(range, content);
         }
 
-        function setEditFactory(uri, coords, content) {
+        function deleteFactory(uri, coords) {
             const workspaceEdit = new WorkspaceEdit();
             const range = rangeFactory(coords.start, coords.end);
             workspaceEdit.delete(uri, range);
-            return workspaceEdit;
-        }
-        function applyEdit (coords, content){
-            const edit = setEditFactory(document.uri, coords, content);
-            workspace.applyEdit(edit);
+            workspace.applyEdit(workspaceEdit);
         }
 
         const line = document.lineAt(selection.start);
         if (line.isEmptyOrWhitespace) {
-            applyEdit(line.range, "")
+            deleteFactory(document.uri, line.range)
             const position = editor.selection.active;
             var newPosition = position.with(position.line, 0);
             editor.selection = new Selection(newPosition, newPosition);
