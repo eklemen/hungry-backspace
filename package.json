@@ -1,0 +1,39 @@
+{
+    "name": "hungry-backspace",
+    "displayName": "hungry-backspace",
+    "description": "Your backspace is hungry, for whitespace!",
+    "version": "0.0.1",
+    "publisher": "eklemen",
+    "engines": {
+        "vscode": "^1.10.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:jrieken.backspaceLeft"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "keybindings": [
+            {
+                "command": "jrieken.backspaceLeft",
+                "key": "backspace",
+                "when": "editorTextFocus"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "tsc -p ./",
+        "compile": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.0.3",
+        "vscode": "latest",
+        "mocha": "^2.3.3",
+        "@types/node": "^6.0.40",
+        "@types/mocha": "^2.2.32"
+    }
+}
