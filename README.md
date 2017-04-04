@@ -8,4 +8,4 @@ No extra keybindings or commands to learn, just backspace.
 ![without](./src/gifs/without.gif)
 
 #### With hungry-backspace
-![with](./src/gifs/with.gif
+![with](./src/gifs/with.gif)
