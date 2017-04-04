@@ -9,3 +9,8 @@ No extra keybindings or commands to learn, just backspace.
 
 #### With hungry-backspace
 ![with](./src/gifs/with.gif)
+
+**Todo**
+
+* [ ] Add multi-cursor support
+* [ ] Write tests
