@@ -14,7 +14,7 @@ import {
 export function activate(context: ExtensionContext) {
     context.subscriptions.push(commands.registerCommand('jrieken.backspaceLeft', backspace));
 }
-function backspace() {
+export function backspace() {
 
     const editor = window.activeTextEditor;
     if (!editor) {
