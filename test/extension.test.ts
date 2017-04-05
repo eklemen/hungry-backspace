@@ -87,5 +87,8 @@ suite("Extension Tests", () => {
 
         let line = getText(1, 0, 1, 16);
         assert.equal(line, "     bar: 'baz'");
+        line = getText(2, 0, 2, 1);
+        assert.equal(line, "}");
     });
+
 });
