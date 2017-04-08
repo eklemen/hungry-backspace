@@ -2,6 +2,8 @@
 import {
     ExtensionContext,
     Selection,
+    TextEditor,
+    Uri,
     Range,
     WorkspaceEdit,
     commands,
@@ -14,34 +16,37 @@ import {
 export function activate(context: ExtensionContext) {
     context.subscriptions.push(commands.registerCommand('jrieken.backspaceLeft', backspace));
 }
-export function backspace() {
+
+function deleteFactory(uri: Uri, coords: Range) : Thenable<Boolean> {
+    const workspaceEdit = new WorkspaceEdit();
+    const range = new Range(coords.start, coords.end);
+    workspaceEdit.delete(uri, range);
+    return workspace.applyEdit(workspaceEdit);
+}
+
+function selectionFactory(editor: TextEditor) : Selection {
+    const position = editor.selection.active;
+    const newPosition = position.with(position.line, 0);
+    return new Selection(newPosition, newPosition);
+}
+
+export function backspace() : Thenable<Boolean> {
 
     const editor = window.activeTextEditor;
+    const {document, selections} = editor;
     if (!editor) {
         return;
     }
-    const {document, selections} = editor;
-
-
     const newSelections = selections.map(selection => {
         // If the line isn't empty(with whitespace) do nothing.
         if (!selection.isEmpty) {
             return selection;
         }
 
-        function deleteFactory(uri, coords) {
-            const workspaceEdit = new WorkspaceEdit();
-            const range = new Range(coords.start, coords.end);
-            workspaceEdit.delete(uri, range);
-            workspace.applyEdit(workspaceEdit);
-        }
-
         const line = document.lineAt(selection.start);
         if (line.isEmptyOrWhitespace) {
             deleteFactory(document.uri, line.range)
-            const position = editor.selection.active;
-            const newPosition = position.with(position.line, 0);
-            editor.selection = new Selection(newPosition, newPosition);
+            editor.selection = selectionFactory(editor);
             return editor.selection;
         }
     });
