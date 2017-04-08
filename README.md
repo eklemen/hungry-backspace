@@ -4,13 +4,8 @@ Get tired of hitting backspace multiple times just to remove a line thats only w
 
 No extra keybindings or commands to learn, just backspace.
 
-#### Without hungry-backspace
+### Without hungry-backspace
 ![without](./src/gifs/without.gif)
 
-#### With hungry-backspace
+### With hungry-backspace
 ![with](./src/gifs/with.gif)
-
-**Todo**
-
-* [ ] Add multi-cursor support
-* [ ] Write tests
