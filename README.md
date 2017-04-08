@@ -5,7 +5,7 @@ Get tired of hitting backspace multiple times just to remove a line thats only w
 No extra keybindings or commands to learn, just backspace.
 
 ### Without hungry-backspace
-![without](./src/gifs/without.gif)
+![without](assets/without.gif)
 
 ### With hungry-backspace
-![with](./src/gifs/with.gif)
+![with](assets/with.gif)
