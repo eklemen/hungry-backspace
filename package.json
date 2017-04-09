@@ -2,9 +2,9 @@
     "name": "hungry-backspace",
     "displayName": "hungry-backspace",
     "description": "Your backspace is hungry, for whitespace!",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "publisher": "eklemen",
-    "icon" : "assets/icon.png",
+    "icon": "assets/icon.png",
     "engines": {
         "vscode": "^1.10.0"
     },
