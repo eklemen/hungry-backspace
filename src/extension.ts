@@ -46,8 +46,8 @@ export function backspace() : Thenable<Boolean> {
         const line = document.lineAt(selection.start);
         if (line.isEmptyOrWhitespace) {
             deleteFactory(document.uri, line.range)
-            editor.selection = selectionFactory(editor);
-            return editor.selection;
+            selection = selectionFactory(editor);
+            return selection;
         }
     });
 

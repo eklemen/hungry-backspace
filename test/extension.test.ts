@@ -45,6 +45,14 @@ suite("Extension Tests", () => {
         }
     }
 
+    function createSelections(selections: Array<any>): any {
+        return selections.map( selection => {
+            let a = selection.line;
+            let b = selection.column;
+            return new Selection(new Position(a, b), new Position(a, b))
+        });
+    }
+
     function getText(sline: number, scol: number, eline: number, ecol: number) {
         let start = new Position(sline, scol);
         let end = new Position(eline, ecol);
@@ -63,6 +71,8 @@ suite("Extension Tests", () => {
             "var foo = {\n"
             + "     bar: 'baz'\n"
             + "     \n"
+            + "     fiz: 'buz'\n"
+            + "     \n"
             + "}";
         return InsertSampleText(sampleText);
     });
@@ -74,20 +84,33 @@ suite("Extension Tests", () => {
         let secondLine = getText(1, 5, 1, 16);
         assert.equal(secondLine, "bar: 'baz'");
 
-        let fourthLine = getText(3, 0, 3, 1);
+        let fourthLine = getText(5, 0, 5, 1);
         assert.equal(fourthLine, "}");
     });
 
-    test("Should remove empty line", async () => {
+    test("Should remove single empty line", async () => {
         let editor = window.activeTextEditor;
+        let points = [{line: 2, column: 5}];
+        let selections = createSelections(points);
+        editor.selections = selections;
+        await ExecuteHungryBackspace("Empty Line");
+        let line = getText(1, 0, 1, 16);
+        assert.equal(line, "     bar: 'baz'");
+        line = getText(2, 0, 2, 16);
+        assert.equal(line, "     fiz: 'buz'");
+    });
 
-        let selection = new Selection(new Position(2, 5), new Position(2, 5));
-        editor.selection = selection;
+    test("Should keep multiple cursors", async () => {
+        let editor = window.activeTextEditor;
+        let points = [{line: 2, column: 5}, {line: 4, column: 5}];
+        editor.selections = createSelections(points);
         await ExecuteHungryBackspace("Empty Line");
 
         let line = getText(1, 0, 1, 16);
         assert.equal(line, "     bar: 'baz'");
-        line = getText(2, 0, 2, 1);
+        line = getText(2, 0, 2, 16);
+        assert.equal(line, "     fiz: 'buz'");
+        line = getText(3, 0, 3, 1);
         assert.equal(line, "}");
     });
 
