@@ -53,3 +53,5 @@ export function backspace() : Thenable<Boolean> {
 
     return commands.executeCommand('deleteLeft');
 }
+
+export function deactivate(){}

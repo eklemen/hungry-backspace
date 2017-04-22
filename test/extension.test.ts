@@ -100,7 +100,7 @@ suite("Extension Tests", () => {
         assert.equal(line, "     fiz: 'buz'");
     });
 
-    test("Should keep multiple cursors", async () => {
+    test("Should remove empty lines for multiple cursors", async () => {
         let editor = window.activeTextEditor;
         let points = [{line: 2, column: 5}, {line: 4, column: 5}];
         editor.selections = createSelections(points);
@@ -112,6 +112,14 @@ suite("Extension Tests", () => {
         assert.equal(line, "     fiz: 'buz'");
         line = getText(3, 0, 3, 1);
         assert.equal(line, "}");
+    });
+
+    test("Should keep same number of cursors after activation", async () => {
+        let editor = window.activeTextEditor;
+        let points = [{line: 2, column: 5}, {line: 4, column: 5}];
+        editor.selections = createSelections(points);
+        await ExecuteHungryBackspace("Empty Line");
+        assert.equal(editor.selections.length, 2);
     });
 
 });

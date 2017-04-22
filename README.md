@@ -9,3 +9,6 @@ No extra keybindings or commands to learn, just backspace.
 
 ### With hungry-backspace
 ![with](assets/with.gif)
+
+### Multi-cursor
+![multi-cursor](assets/multi.gif)
