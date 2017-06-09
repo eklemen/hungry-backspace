@@ -2,7 +2,7 @@
     "name": "hungry-backspace",
     "displayName": "hungry-backspace",
     "description": "Your backspace is hungry, for whitespace!",
-    "version": "0.1.4",
+    "version": "1.0.0",
     "publisher": "eklemen",
     "icon": "assets/icon.png",
     "engines": {
@@ -18,8 +18,7 @@
         "delete",
         "auto-delete",
         "format",
-        "hungry",
-        "best"
+        "hungry"
     ],
     "activationEvents": [
         "onCommand:jrieken.backspaceLeft"
